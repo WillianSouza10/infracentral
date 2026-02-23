@@ -1,0 +1,5 @@
+{
+  "name": "InfraCentral SaaS",
+  "description": "A secure infrastructure management dashboard with role-based access control for Admins, Managers, and Directors.",
+  "requestFramePermissions": []
+}

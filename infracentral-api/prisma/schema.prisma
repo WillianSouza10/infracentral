@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  DIRECTOR
+  ANALYST
+}
+
+model User {
+  id               String   @id @default(uuid())
+  name             String
+  email            String?  @unique
+  role             UserRole @default(ANALYST)
+  avatar           String?
+  title            String?
+  twoFactorEnabled Boolean  @default(false)
+  invitationStatus String?  @default("Pendente") // "Ativo" | "Pendente"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  sessions  UserSession[]
+  auditLogs AuditLog[] // Se houver relação direta (opcional, o log atual usa string)
+}
+
+model UserSession {
+  id         String   @id @default(uuid())
+  userId     String
+  device     String
+  location   String
+  lastActive String
+  current    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  userId    String? // Relacionamento opcional, no mock usava string "Lucca Alves"
+  userStr   String // Nome do usuário armazenado como texto, como no mock
+  action    String
+  ip        String
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Domain {
+  id              String    @id @default(uuid())
+  url             String
+  provider        String
+  login           String?
+  password        String?
+  status          String    @default("Active") // 'Active' | 'Expiring' | 'Expired'
+  cost            Float     @default(0)
+  renewalDate     DateTime
+  acquisitionDate DateTime?
+  serverIp        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Server {
+  id         String  @id @default(uuid())
+  name       String
+  provider   String
+  ipReal     String?
+  ipExternal String?
+  ipInternal String?
+  username   String?
+  password   String?
+  status     String  @default("Online") // 'Online' | 'Offline' | 'Maintenance'
+  region     String
+  cost       Float   @default(0)
+  uptime     String  @default("100%")
+
+  // Hardware relations could be scalar JSON or separate table. Doing scalar here for simplicity.
+  cpu     String?
+  ram     String?
+  storage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  applications Application[]
+}
+
+model Application {
+  id          String  @id @default(uuid())
+  serverId    String
+  name        String
+  company     String
+  description String?
+
+  server Server @relation(fields: [serverId], references: [id])
+}
+
+model KpiData {
+  id    String @id @default(uuid())
+  label String
+  value String
+  trend Float
+  icon  String
+}
+
+model Acquisition {
+  id           String   @id @default(uuid())
+  itemName     String
+  requester    String
+  approver     String
+  installments Int      @default(1)
+  costCenter   String
+  value        Float
+  status       String   @default("Pending") // 'Pending' | 'Approved' | 'Rejected'
+  date         DateTime
+  category     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ServiceContract {
+  id              String    @id @default(uuid())
+  providerName    String
+  contractFile    String
+  contractPdf     String?
+  acquisitionDate DateTime
+  expirationDate  DateTime?
+  phoneNumber     String
+  cellNumber      String
+  email           String
+  supportEmail    String
+  category        String
+
+  // Costs
+  costRecurring Float @default(0)
+  costSetup     Float @default(0)
+  costPenalty   Float @default(0)
+
+  durationMonths Int
+  autoRenew      Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
