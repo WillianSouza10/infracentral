@@ -439,7 +439,10 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAppModalOpen(false)}></div>
             <div className="bg-surface border border-slate-700 rounded-xl shadow-2xl w-full max-w-md relative z-10 animate-fade-in-up">
               <div className="flex justify-between items-center p-6 border-b border-slate-700">
-                <h3 className="text-lg font-semibold text-slate-100">Adicionar Aplicação</h3>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-100">Adicionar Aplicação</h3>
+                  <p className="text-xs text-slate-500 mt-1">Campos marcados com <span className="text-rose-500">*</span> são obrigatórios</p>
+                </div>
                 <button onClick={() => setIsAppModalOpen(false)} className="text-slate-400 hover:text-white">
                   <X size={20} />
                 </button>
@@ -447,7 +450,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
 
               <form onSubmit={handleAddApplication} className="p-6 space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Nome da Aplicação</label>
+                  <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Nome da Aplicação <span className="text-rose-500">*</span></label>
                   <input
                     type="text"
                     required
@@ -459,7 +462,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Empresa / Cliente</label>
+                  <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Empresa / Cliente <span className="text-rose-500">*</span></label>
                   <input
                     list="company-options"
                     type="text"
@@ -513,7 +516,10 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
             <div className="bg-surface border border-slate-700 rounded-xl shadow-2xl w-full max-w-lg relative z-10 animate-fade-in-up max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center p-6 border-b border-slate-700 sticky top-0 bg-surface z-10">
-                <h3 className="text-lg font-semibold text-slate-100">Editar Servidor</h3>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-100">Editar Servidor</h3>
+                  <p className="text-xs text-slate-500 mt-1">Campos marcados com <span className="text-rose-500">*</span> são obrigatórios</p>
+                </div>
                 <button onClick={resetServerForm} className="text-slate-400 hover:text-white">
                   <X size={20} />
                 </button>
@@ -522,7 +528,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
               <form onSubmit={handleSubmitServer} className="p-6 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Nome do Servidor</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Nome do Servidor <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -534,7 +540,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Provedor</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Provedor <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -546,7 +552,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Custo Mensal (R$)</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Custo Mensal (R$) <span className="text-rose-500">*</span></label>
                     <input
                       type="number"
                       step="0.01"
@@ -559,7 +565,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Status</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Status <span className="text-rose-500">*</span></label>
                     <div className="relative">
                       <select
                         value={newStatus}
@@ -617,7 +623,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">IP Externo</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">IP Externo <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -629,7 +635,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">IP Interno</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">IP Interno <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -645,7 +651,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Usuário SSH</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Usuário SSH <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -657,7 +663,7 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Senha Root</label>
+                    <label className="block text-xs font-medium text-slate-400 mb-1 uppercase">Senha Root <span className="text-rose-500">*</span></label>
                     <input
                       type="text"
                       required
@@ -836,7 +842,10 @@ const ServerManagement: React.FC<ServerManagementProps> = ({ servers, user, onAd
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
           <div className="bg-surface border border-slate-700 rounded-xl shadow-2xl w-full max-w-lg relative z-10 animate-fade-in-up max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center p-6 border-b border-slate-700 sticky top-0 bg-surface z-10">
-              <h3 className="text-lg font-semibold text-slate-100">{editingServerId ? 'Editar Servidor' : 'Adicionar Novo Servidor'}</h3>
+              <div>
+                <h3 className="text-lg font-semibold text-slate-100">{editingServerId ? 'Editar Servidor' : 'Adicionar Novo Servidor'}</h3>
+                <p className="text-xs text-slate-500 mt-1">Campos marcados com <span className="text-rose-500">*</span> são obrigatórios</p>
+              </div>
               <button onClick={resetServerForm} className="text-slate-400 hover:text-white">
                 <X size={20} />
               </button>
